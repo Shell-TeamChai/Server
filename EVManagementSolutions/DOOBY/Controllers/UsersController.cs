@@ -1,7 +1,7 @@
-﻿using DOOBY.Models;
-using DOOBY.Models.Auth;
+﻿using DOOBY.GloablExceptions;
+using DOOBY.Models;
 using DOOBY.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DOOBY.Controllers
@@ -10,21 +10,49 @@ namespace DOOBY.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        IUser _user;
-        IToken _tokenizer;
+        private IUser _user;
 
-        public UsersController(IUser _user, IToken tokenizer = null)
+        public UsersController(IUser _user)
         {
             this._user = _user;
-            _tokenizer = tokenizer;
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<AuthenticateResponse>> Authenticate(AuthenticateRequest request)
-        //{
-        //    //var result = await _user.Authenticate(request);
-        //    //return result;
-        //}
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<ActionResult<AuthenticateResponse>> Authenticate(AuthenticateRequest model)
+        {
+            if (model != null)
+            {
+                var response = await _user.Authenticate(model);
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest("No Data Posted");
+            }
+        }
+
+        [HttpPost("register")]
+        public async Task<ActionResult<User>> AddUser(User user)
+        {
+            try
+            {
+                var newUser = await _user.AddUser(user);
+
+                if (newUser != null)
+                {
+                    return Ok("User Created Successfully");
+                }
+                else
+                {
+                    return NoContent();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ExceptionDetails.exceptionMessages[2] });
+            }
+        }
 
         [HttpGet("{user_id}")]
         public async Task<ActionResult<User>> GetUserDetailById(int user_id)
@@ -34,7 +62,5 @@ namespace DOOBY.Controllers
             return result;
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<Customer>> RegisterUser()
     }
 }

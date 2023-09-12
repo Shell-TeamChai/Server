@@ -1,14 +1,13 @@
-﻿namespace DOOBY.Models.Auth
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DOOBY.Models
 {
     public class AuthenticateRequest
     {
-        public string Email { get; set; } = null!;
+        [Required]
+        public string? Email { get; set; }
 
-        public string Password { get; set; } = null!;
-
-        public AuthenticateRequest(User user) { 
-            Email = user.Email;
-            Password = user.Password;
-        }
+        [Required]
+        public string? Password { get; set; }
     }
 }

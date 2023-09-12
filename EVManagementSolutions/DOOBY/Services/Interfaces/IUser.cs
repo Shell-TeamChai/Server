@@ -1,12 +1,13 @@
 ﻿using DOOBY.Models;
-using DOOBY.Models.Auth;
 
 namespace DOOBY.Services.Interfaces
 {
     public interface IUser
     {
         public Task<User> GetUserDetailById(int user_id);
+        
+        public Task<AuthenticateResponse> Authenticate(AuthenticateRequest model);
+        public Task<User> AddUser(User user);
 
-        //public AuthenticateResponse Authenticate(AuthenticateRequest request);
     }
 }

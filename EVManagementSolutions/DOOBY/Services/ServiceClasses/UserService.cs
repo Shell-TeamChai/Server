@@ -1,8 +1,6 @@
 ﻿using DOOBY.GloablExceptions;
 using DOOBY.Models;
-using DOOBY.Models.Auth;
 using DOOBY.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DOOBY.Services.ServiceClasses
@@ -11,34 +9,48 @@ namespace DOOBY.Services.ServiceClasses
     {
 
         private CaseStudyContext _context;
+        private IToken _tokenGenerator;
 
 
-
-        public UserService(CaseStudyContext context)
+        public UserService(CaseStudyContext context, IToken tokenGenerator)
         {
             _context = context;
+            _tokenGenerator = tokenGenerator;
         }
 
-        //public Task<AuthenticateResponse> Authenticate(AuthenticateRequest request)
-        //{
-        //    var token = 
-        //    var result = new AuthenticateResponse(user, token);    
-        //}
+        public Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
+        {
+            var user = _context.Users.SingleOrDefault(x => x.Email == model.Email);
 
-        public async Task<List<User>> AddUser(User user)
+            // validate
+            if (user == null || user.Password != model.Password)
+                throw new Exception("Username or password is incorrect");
+
+            user.Type = (user.Type == Roles.Admin ? Roles.Admin : Roles.Customer);
+            // authentication successful so generate jwt token
+            var jwtToken = _tokenGenerator.GenerateToken(user.Email, user.Type);
+
+            var newResponse = new AuthenticateResponse(user, jwtToken);
+            return Task.FromResult(newResponse);
+        }
+
+        public async Task<User> AddUser(User user)
         {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
-            return await _context.Users.ToListAsync();
-        }
+            var newUser = await _context.Users.FirstOrDefaultAsync(item => item.Email == user.Email);
 
+            if (newUser == null)
+            {
+                throw new Exception(ExceptionDetails.exceptionMessages[0]);
+            }
+            return newUser;
+        }
 
 
         public async Task<List<User>> DeleteUser(string username)
         {
             var ruser = await _context.Users.FindAsync(username);
-
-
 
             if (ruser != null)
             {
@@ -51,9 +63,6 @@ namespace DOOBY.Services.ServiceClasses
                 throw new Exception(ExceptionDetails.exceptionMessages[1]);
             }
         }
-
-        
-
 
         public async Task<User> GetUserDetailById(int user_id)
         {
@@ -68,5 +77,6 @@ namespace DOOBY.Services.ServiceClasses
                 throw new Exception(ExceptionDetails.exceptionMessages[1]);
             }
         }
+
     }
 }

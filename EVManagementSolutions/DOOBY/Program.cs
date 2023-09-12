@@ -23,26 +23,38 @@ builder.Services.AddDbContext<CaseStudyContext>(
         )
 );
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-//}).AddJwtBearer(o =>
-//{
-//    o.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-//        //ValidAudience = builder.Configuration["Jwt:Audience"],
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token_Key"])),
-//        ValidateIssuer = true,
-//        //ValidateAudience = true,
-//        //ValidateLifetime = false,
-//        ValidateIssuerSigningKey = true
-//    };
-//});
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+    {
+        // Configure JWT authentication options here
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["JwtSettings: Issuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings: Token_Key"] 
+                ?? "$#$##$@#$#@$FDFDSFSAFSDFSADFDSFSAFAFDFS")),
+        };
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+        policy.RequireRole(Roles.Admin));
+
+    options.AddPolicy("UserPolicy", policy =>
+        policy.RequireRole(Roles.Customer));
+});
 
 builder.Services.AddScoped<IUser, UserService>();
+builder.Services.AddScoped<IToken, TokenService>();
+builder.Services.AddScoped<ICustomer, CustomerService>();
 builder.Services.AddScoped<IFeedback, FeedbackService>();
 
 
@@ -57,6 +69,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
