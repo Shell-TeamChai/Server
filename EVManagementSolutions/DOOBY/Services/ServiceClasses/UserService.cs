@@ -2,6 +2,7 @@
 using DOOBY.Models;
 using DOOBY.Models.Auth;
 using DOOBY.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DOOBY.Services.ServiceClasses
@@ -18,10 +19,11 @@ namespace DOOBY.Services.ServiceClasses
             _context = context;
         }
 
-        public AuthenticateResponse Authenticate(AuthenticateRequest request)
-        {
-
-        }
+        //public Task<AuthenticateResponse> Authenticate(AuthenticateRequest request)
+        //{
+        //    var token = 
+        //    var result = new AuthenticateResponse(user, token);    
+        //}
 
         public async Task<List<User>> AddUser(User user)
         {
@@ -50,6 +52,7 @@ namespace DOOBY.Services.ServiceClasses
             }
         }
 
+        
 
 
         public async Task<User> GetUserDetailById(int user_id)

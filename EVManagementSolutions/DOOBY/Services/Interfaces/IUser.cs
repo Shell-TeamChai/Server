@@ -7,6 +7,6 @@ namespace DOOBY.Services.Interfaces
     {
         public Task<User> GetUserDetailById(int user_id);
 
-        public AuthenticateResponse Authenticate(AuthenticateRequest request);
+        //public AuthenticateResponse Authenticate(AuthenticateRequest request);
     }
 }

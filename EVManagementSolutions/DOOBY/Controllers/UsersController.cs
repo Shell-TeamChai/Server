@@ -19,12 +19,12 @@ namespace DOOBY.Controllers
             _tokenizer = tokenizer;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<AuthenticateResponse>> Authenticate(AuthenticateRequest request)
-        {
-            //var result = await _user.Authenticate(request);
-            //return result;
-        }
+        //[HttpPost]
+        //public async Task<ActionResult<AuthenticateResponse>> Authenticate(AuthenticateRequest request)
+        //{
+        //    //var result = await _user.Authenticate(request);
+        //    //return result;
+        //}
 
         [HttpGet("{user_id}")]
         public async Task<ActionResult<User>> GetUserDetailById(int user_id)
@@ -32,7 +32,9 @@ namespace DOOBY.Controllers
             var result = await _user.GetUserDetailById(user_id);
 
             return result;
-
         }
+
+        //[HttpPost]
+        //public async Task<ActionResult<Customer>> RegisterUser()
     }
 }
