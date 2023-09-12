@@ -1,4 +1,5 @@
 ﻿using DOOBY.Models;
+using DOOBY.Models.Auth;
 using DOOBY.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,13 @@ namespace DOOBY.Controllers
         {
             this._user = _user;
             _tokenizer = tokenizer;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<AuthenticateResponse>> Authenticate(AuthenticateRequest request)
+        {
+            //var result = await _user.Authenticate(request);
+            //return result;
         }
 
         [HttpGet("{user_id}")]

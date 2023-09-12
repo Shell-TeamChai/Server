@@ -1,7 +1,10 @@
 using DOOBY.Models;
 using DOOBY.Services.Interfaces;
 using DOOBY.Services.ServiceClasses;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +23,24 @@ builder.Services.AddDbContext<CaseStudyContext>(
         )
 );
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(o =>
+{
+    o.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        //ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token_Key"])),
+        ValidateIssuer = true,
+        //ValidateAudience = true,
+        //ValidateLifetime = false,
+        ValidateIssuerSigningKey = true
+    };
+});
 
 builder.Services.AddScoped<IUser, UserService>();
 

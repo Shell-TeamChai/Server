@@ -1,5 +1,6 @@
 ﻿using DOOBY.GloablExceptions;
 using DOOBY.Models;
+using DOOBY.Models.Auth;
 using DOOBY.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +18,10 @@ namespace DOOBY.Services.ServiceClasses
             _context = context;
         }
 
+        public AuthenticateResponse Authenticate(AuthenticateRequest request)
+        {
 
+        }
 
         public async Task<List<User>> AddUser(User user)
         {
