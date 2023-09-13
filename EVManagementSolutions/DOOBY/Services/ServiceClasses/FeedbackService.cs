@@ -26,8 +26,17 @@ namespace DOOBY.Services.ServiceClasses
             return result;
         }
 
-        public async Task<Feedback> PostFeedback(Feedback feedback)
+        public async Task<Feedback> PostFeedback(CustomerFeedbackDTO response)
         {
+            var res = await _context.Customers.Where(item => item.CustId == response.UserId).ToListAsync();
+            Feedback feedback = new Feedback(response, res[0]);
+            //feedback.FeedbackId = response.FeedbackId;
+            //feedback.UserId = response.UserId;
+            //feedback.Rating = response.Rating;
+            //feedback.Description = response.Description;
+            //feedback.StationId = response.StationId;
+            //feedback.User = res[0];
+
             await _context.Feedbacks.AddAsync(feedback);
             await _context.SaveChangesAsync();
             var result = await _context.Feedbacks.FindAsync(feedback.FeedbackId);

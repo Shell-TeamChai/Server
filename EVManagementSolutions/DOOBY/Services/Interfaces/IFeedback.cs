@@ -7,6 +7,6 @@ namespace DOOBY.Services.Interfaces
         public Task<List<Feedback>> GetAllFeedbacks();
         //public Task<List<Feedback>> GetAllFeedbacksFromCustomer(int cust_id);
 
-        public Task<Feedback> PostFeedback(Feedback feedback);
+        public Task<Feedback> PostFeedback(CustomerFeedbackDTO response);
     }
 }

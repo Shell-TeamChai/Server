@@ -10,8 +10,6 @@ public partial class User
 
     public string Email { get; set; } = null!;
 
-    [JsonIgnore]
-
     public string Password { get; set; } = null!;
 
     [JsonIgnore]

@@ -42,7 +42,7 @@ namespace DOOBY.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         [ProducesResponseType(typeof(Customer), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Customer), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -54,7 +54,7 @@ namespace DOOBY.Controllers
 
                 if (newUser != null)
                 {
-                    return Ok(new { message = "Customer added Successfully", user = newUser });
+                    return Ok(new { message = "Customer info updated Successfully", user = newUser });
                 }
                 else
                 {
@@ -64,7 +64,7 @@ namespace DOOBY.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { error = ex.Message });
-            }
+            } 
         }
     }
 }

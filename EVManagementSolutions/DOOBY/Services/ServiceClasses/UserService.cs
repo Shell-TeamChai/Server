@@ -37,6 +37,26 @@ namespace DOOBY.Services.ServiceClasses
         public async Task<User> AddUser(User user)
         {
             await _context.Users.AddAsync(user);
+
+            if(user.Type == Roles.Admin)
+            {
+                _context.Admins.Add(new Admin()
+                {
+                    AdminId = user.UserId,
+                    Fname = "",
+                    Lname = "",
+                    Permissions = { }
+                });
+            } else
+            {
+                _context.Customers.Add(new Customer()
+                {
+                    CustId = user.UserId,
+                    Fname = "",
+                    Lname = "",
+                    PhoneNum = ""
+                });
+            }
             await _context.SaveChangesAsync();
             var newUser = await _context.Users.FirstOrDefaultAsync(item => item.Email == user.Email);
 

@@ -36,23 +36,14 @@ namespace DOOBY.Services.ServiceClasses
 
         public async Task<Customer> AddNewCustomer(Customer customer)
         {
+            var _customer = await _context.Customers.FirstOrDefaultAsync(item => item.CustId == customer.CustId);
 
-            var findUserId = await _context.Users.FirstOrDefaultAsync(item => item.UserId == customer.CustId);
+            _customer.Fname = customer.Fname;
+            _customer.Lname = customer.Lname;
+            _customer.PhoneNum = customer.PhoneNum;
 
-            if (findUserId == null)
-            {
-                throw new Exception(ExceptionDetails.exceptionMessages[3]);
-            }
-
-            var findCustId = await _context.Customers.FirstAsync(item => item.CustId == customer.CustId);
-
-            if (findCustId != null)
-            {
-                throw new Exception("User Already exists with given userid");
-            }
-
-            await _context.Customers.AddAsync(customer);
             await _context.SaveChangesAsync();
+
             var newCustomer = await _context.Customers.Where(item => item.CustId == customer.CustId).ToListAsync();
 
             if (newCustomer == null)

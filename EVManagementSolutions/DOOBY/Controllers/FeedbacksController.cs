@@ -26,9 +26,9 @@ namespace DOOBY.Controllers
         }
 
         [HttpPost]
-        public async Task<Feedback> PostFeedback(Feedback feedback)
+        public async Task<Feedback> PostFeedback(CustomerFeedbackDTO response)
         {
-            var result = await _feedback.PostFeedback(feedback);
+            var result = await _feedback.PostFeedback(response);
 
             return result;
         }

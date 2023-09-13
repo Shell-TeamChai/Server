@@ -56,6 +56,7 @@ builder.Services.AddScoped<IUser, UserService>();
 builder.Services.AddScoped<IToken, TokenService>();
 builder.Services.AddScoped<ICustomer, CustomerService>();
 builder.Services.AddScoped<IFeedback, FeedbackService>();
+builder.Services.AddScoped<IStationInfo, StationInfoService>();
 
 
 var app = builder.Build();

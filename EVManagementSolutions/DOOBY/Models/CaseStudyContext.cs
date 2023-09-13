@@ -28,6 +28,7 @@ public partial class CaseStudyContext : DbContext
     public virtual DbSet<StationSelectInfo> StationSelectInfos { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+    public object StationInfo { get; internal set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -122,7 +123,7 @@ public partial class CaseStudyContext : DbContext
                 .HasMaxLength(256)
                 .HasColumnName("description");
             entity.Property(e => e.StationId).HasColumnName("station_id");
-            entity.Property(e => e.Type)
+            entity.Property(e => e.Status)
                 .HasMaxLength(24)
                 .HasColumnName("type");
             entity.Property(e => e.UserId)
