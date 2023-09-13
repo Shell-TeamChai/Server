@@ -28,11 +28,12 @@ public partial class CaseStudyContext : DbContext
     public virtual DbSet<StationSelectInfo> StationSelectInfos { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+    public object StationInfo { get; internal set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost; database=Case_Study; username=postgres; password=password;");
+    {
 
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Admin>(entity =>
@@ -54,7 +55,7 @@ public partial class CaseStudyContext : DbContext
                 .HasColumnType("character varying[]")
                 .HasColumnName("permissions");
 
-            entity.HasOne(d => d.AdminNavigation).WithOne(p => p.Admin)
+            entity.HasOne(d => d.UserInfo).WithOne(p => p.Admin)
                 .HasForeignKey<Admin>(d => d.AdminId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Admins_admin_id");
@@ -80,7 +81,7 @@ public partial class CaseStudyContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("phone_num");
 
-            entity.HasOne(d => d.Cust).WithOne(p => p.Customer)
+            entity.HasOne(d => d.UserInfo).WithOne(p => p.Customer)
                 .HasForeignKey<Customer>(d => d.CustId)
                 .HasConstraintName("FK_Customer_cust_id");
         });
@@ -122,7 +123,7 @@ public partial class CaseStudyContext : DbContext
                 .HasMaxLength(256)
                 .HasColumnName("description");
             entity.Property(e => e.StationId).HasColumnName("station_id");
-            entity.Property(e => e.Type)
+            entity.Property(e => e.Status)
                 .HasMaxLength(24)
                 .HasColumnName("type");
             entity.Property(e => e.UserId)

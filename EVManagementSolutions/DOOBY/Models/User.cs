@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Text.Json.Serialization;
 
 namespace DOOBY.Models;
 
@@ -13,7 +12,9 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
+    [JsonIgnore]
     public virtual Admin? Admin { get; set; }
 
+    [JsonIgnore]
     public virtual Customer? Customer { get; set; }
 }

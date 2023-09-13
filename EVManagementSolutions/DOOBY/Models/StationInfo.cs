@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Text.Json.Serialization;
 
 namespace DOOBY.Models;
 
@@ -17,7 +16,9 @@ public partial class StationInfo
 
     public int? AvailableNodes { get; set; }
 
+    [JsonIgnore]
     public virtual Admin? StationMasterNavigation { get; set; }
 
+    [JsonIgnore]
     public virtual StationSelectInfo? StationSelectInfo { get; set; }
 }

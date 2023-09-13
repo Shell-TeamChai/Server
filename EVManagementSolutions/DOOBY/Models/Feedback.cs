@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Text.Json.Serialization;
+using DOOBY.DTOs;
 
 namespace DOOBY.Models;
 
@@ -15,5 +15,17 @@ public partial class Feedback
 
     public int? StationId { get; set; }
 
+    [JsonIgnore]
     public virtual Customer User { get; set; } = null!;
+
+    public Feedback() { }
+
+    public Feedback(CustomerFeedbackDTO customerFeedbackDTO, Customer customer) {
+        FeedbackId = customerFeedbackDTO.FeedbackId;
+        UserId = customerFeedbackDTO.UserId;
+        Rating = customerFeedbackDTO.Rating;  
+        Description = customerFeedbackDTO.Description;
+        StationId = customerFeedbackDTO.StationId;
+        User = customer;
+    }
 }
