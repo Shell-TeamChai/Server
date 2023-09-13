@@ -29,7 +29,9 @@ namespace DOOBY.Services.ServiceClasses
             {
                 throw new Exception(ExceptionDetails.exceptionMessages[1]);
             }
+            var feedbacks = await _context.Feedbacks.Where(item => item.UserId == custId).ToListAsync();
 
+            result.Feedbacks = feedbacks;
             return result;
         }
 
