@@ -1,4 +1,5 @@
-﻿using DOOBY.GloablExceptions;
+﻿using DOOBY.DTOs;
+using DOOBY.GloablExceptions;
 using DOOBY.Models;
 using DOOBY.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -26,9 +27,26 @@ namespace DOOBY.Services.ServiceClasses
             return result;
         }
 
+        public async Task<List<Feedback>> GetAllFeedbacksFromCustomer(int cust_id)
+        {
+            var res = await _context.Feedbacks.Where(item => item.UserId == cust_id).ToListAsync();
+
+            if (res == null)
+            {
+                throw new Exception("No feedbacks from given customer");
+            }
+
+            return res;
+        }
+
         public async Task<Feedback> PostFeedback(CustomerFeedbackDTO response)
         {
             var res = await _context.Customers.Where(item => item.CustId == response.UserId).ToListAsync();
+
+            if(res == null)
+            {
+                throw new Exception(ExceptionDetails.exceptionMessages[1]);
+            }
             Feedback feedback = new Feedback(response, res[0]);
             //feedback.FeedbackId = response.FeedbackId;
             //feedback.UserId = response.UserId;

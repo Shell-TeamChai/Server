@@ -1,6 +1,6 @@
-﻿using DOOBY.Models;
+﻿using DOOBY.DTOs;
+using DOOBY.Models;
 using DOOBY.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DOOBY.Controllers
@@ -22,6 +22,14 @@ namespace DOOBY.Controllers
         {
             var result = await _feedback.GetAllFeedbacks();
 
+            return result;
+        }
+
+        [HttpGet("{cust_id}")]
+        public async Task<List<Feedback>> GetAllFeedbacksFromCustomer(int cust_id)
+        {
+            var result = await _feedback.GetAllFeedbacksFromCustomer(cust_id);
+            
             return result;
         }
 

@@ -20,7 +20,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if(findUserById == null)
             {
-                throw new NullReferenceException(ExceptionDetails.exceptionMessages[3]);
+                throw new NullReferenceException(ExceptionDetails.exceptionMessages[0]);
             }
 
             var result = await _context.Customers.FirstOrDefaultAsync(item => item.CustId == custId);
@@ -39,6 +39,11 @@ namespace DOOBY.Services.ServiceClasses
         public async Task<Customer> AddNewCustomer(Customer customer)
         {
             var _customer = await _context.Customers.FirstOrDefaultAsync(item => item.CustId == customer.CustId);
+
+            if(_customer == null)
+            {
+                throw new Exception(ExceptionDetails.exceptionMessages[0]);
+            }
 
             _customer.Fname = customer.Fname;
             _customer.Lname = customer.Lname;

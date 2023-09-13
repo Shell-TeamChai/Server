@@ -54,6 +54,7 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddScoped<IUser, UserService>();
 builder.Services.AddScoped<IToken, TokenService>();
+builder.Services.AddScoped<IAdmin, AdminService>();
 builder.Services.AddScoped<ICustomer, CustomerService>();
 builder.Services.AddScoped<IFeedback, FeedbackService>();
 builder.Services.AddScoped<IStationInfo, StationInfoService>();

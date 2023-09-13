@@ -41,7 +41,7 @@ namespace DOOBY.Controllers
 
                 if (newUser != null)
                 {
-                    return Ok("User Created Successfully");
+                    return Ok(new { message = "User Created Successfully" });
                 }
                 else
                 {
@@ -50,7 +50,7 @@ namespace DOOBY.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { error = ExceptionDetails.exceptionMessages[2] });
+                return BadRequest(new { error = ExceptionDetails.exceptionMessages[1] });
             }
         }
 

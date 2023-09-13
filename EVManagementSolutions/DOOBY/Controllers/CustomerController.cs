@@ -19,7 +19,7 @@ namespace DOOBY.Controllers
             _customer = customer;
         }
 
-        [HttpGet]
+        [HttpGet("{custId}")]
         [ProducesResponseType(typeof(Customer), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Customer>> GetCustomerDetailById(int custId)

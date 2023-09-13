@@ -36,6 +36,13 @@ namespace DOOBY.Services.ServiceClasses
 
         public async Task<User> AddUser(User user)
         {
+            var _user = await _context.Users.FirstOrDefaultAsync(item => item.UserId == user.UserId);
+            
+            if(user != null)
+            {
+                throw new Exception(ExceptionDetails.exceptionMessages[1]);
+            }
+
             await _context.Users.AddAsync(user);
 
             if(user.Type == Roles.Admin)
@@ -47,7 +54,8 @@ namespace DOOBY.Services.ServiceClasses
                     Lname = "",
                     Permissions = { }
                 });
-            } else
+            } 
+            else
             {
                 _context.Customers.Add(new Customer()
                 {
@@ -58,6 +66,7 @@ namespace DOOBY.Services.ServiceClasses
                 });
             }
             await _context.SaveChangesAsync();
+
             var newUser = await _context.Users.FirstOrDefaultAsync(item => item.Email == user.Email);
 
             if (newUser == null)

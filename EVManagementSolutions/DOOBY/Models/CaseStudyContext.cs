@@ -55,7 +55,7 @@ public partial class CaseStudyContext : DbContext
                 .HasColumnType("character varying[]")
                 .HasColumnName("permissions");
 
-            entity.HasOne(d => d.AdminNavigation).WithOne(p => p.Admin)
+            entity.HasOne(d => d.UserInfo).WithOne(p => p.Admin)
                 .HasForeignKey<Admin>(d => d.AdminId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Admins_admin_id");
@@ -81,7 +81,7 @@ public partial class CaseStudyContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("phone_num");
 
-            entity.HasOne(d => d.Cust).WithOne(p => p.Customer)
+            entity.HasOne(d => d.UserInfo).WithOne(p => p.Customer)
                 .HasForeignKey<Customer>(d => d.CustId)
                 .HasConstraintName("FK_Customer_cust_id");
         });

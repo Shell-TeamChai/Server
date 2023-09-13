@@ -26,6 +26,17 @@ namespace DOOBY.Services.ServiceClasses
             return result;
         }
 
+        public async Task<StationInfo> GetStationInfoById(int stationId)
+        {
+            var _station = await _context.StationInfos.FindAsync(stationId);
+
+            if (_station == null)
+            {
+                throw new NullReferenceException(ExceptionDetails.exceptionMessages[0]);
+            }
+
+            return _station;
+        }
         public async Task<StationInfo> AddNewStation(StationInfo stationInfo)
         {
             await _context.StationInfos.AddAsync(stationInfo);

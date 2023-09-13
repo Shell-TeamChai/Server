@@ -1,4 +1,6 @@
 ﻿using System.Text.Json.Serialization;
+using DOOBY.DTOs;
+
 namespace DOOBY.Models;
 
 public partial class Feedback
@@ -13,7 +15,7 @@ public partial class Feedback
 
     public int? StationId { get; set; }
 
-    //[JsonIgnore]
+    [JsonIgnore]
     public virtual Customer User { get; set; } = null!;
 
     public Feedback() { }
@@ -24,6 +26,6 @@ public partial class Feedback
         Rating = customerFeedbackDTO.Rating;  
         Description = customerFeedbackDTO.Description;
         StationId = customerFeedbackDTO.StationId;
-        //User = customer;
+        User = customer;
     }
 }

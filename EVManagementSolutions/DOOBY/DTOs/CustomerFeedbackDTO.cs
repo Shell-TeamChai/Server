@@ -1,4 +1,4 @@
-﻿namespace DOOBY.Models
+﻿namespace DOOBY.DTOs
 {
     public class CustomerFeedbackDTO
     {

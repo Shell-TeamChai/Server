@@ -16,12 +16,28 @@ namespace DOOBY.Controllers
             _stationInfo = stationInfo;
         }
 
-        [HttpGet]
+        [HttpGet("all/")]
         public async Task<ActionResult<List<StationInfo>>> GetAllStations()
         {
             var result = await _stationInfo.GetAllStations();
 
             return result;
+        }
+
+        [HttpGet("{stationId}")]
+        public async Task<StationInfo> GetStationInfoById(int stationId)
+        {
+            var result = await _stationInfo.GetStationInfoById(stationId);
+
+            return result;
+        }
+
+        [HttpGet("geolocations/")]
+        public async Task<ActionResult<List<StationInfo>>> GetAllGeoLocations()
+        {
+            var result = await _stationInfo.GetAllGeoLocations();
+
+            return Ok(result);
         }
 
         [HttpPost]
@@ -35,7 +51,7 @@ namespace DOOBY.Controllers
         [HttpPut]
         public async Task<StationInfo> UpdateStationInfo(StationInfo stationInfo)
         {
-            var result = await _stationInfo.AddNewStation(stationInfo);
+            var result = await _stationInfo.UpdateStationInfo(stationInfo);
 
             return result;
         }

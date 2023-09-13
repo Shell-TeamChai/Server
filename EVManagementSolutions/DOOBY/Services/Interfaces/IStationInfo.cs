@@ -9,6 +9,8 @@ namespace DOOBY.Services.Interfaces
 
         public Task<List<GeolocationInfo>> GetAllGeoLocations();
 
+        public Task<StationInfo> GetStationInfoById(int stationId);
+
         public Task<StationInfo> AddNewStation(StationInfo stationInfo);
 
         public Task<StationInfo> UpdateStationInfo(StationInfo stationInfo);
