@@ -32,6 +32,7 @@ namespace DOOBY.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<User>> AddUser(User user)
         {

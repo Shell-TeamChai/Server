@@ -1,5 +1,6 @@
 ﻿using DOOBY.Models;
 using DOOBY.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,7 @@ namespace DOOBY.Controllers
         }
 
         [HttpGet("{adminId}")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(typeof(Admin), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Admin>> GetAdminDetailById(int adminId)
@@ -38,6 +40,7 @@ namespace DOOBY.Controllers
             }
         }
 
+        //[Authorize(Roles = Roles.Admin)]
         [HttpPut]
         [ProducesResponseType(typeof(Admin), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Admin), StatusCodes.Status400BadRequest)]

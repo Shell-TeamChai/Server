@@ -20,6 +20,7 @@ namespace DOOBY.Controllers
         }
 
         [HttpGet("{custId}")]
+        [Authorize(Roles = Roles.Customer)]
         [ProducesResponseType(typeof(Customer), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Customer>> GetCustomerDetailById(int custId)

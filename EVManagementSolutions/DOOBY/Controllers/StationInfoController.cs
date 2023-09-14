@@ -1,5 +1,6 @@
 ﻿using DOOBY.Models;
 using DOOBY.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,9 @@ namespace DOOBY.Controllers
         }
 
         [HttpGet("all/")]
+        [ProducesResponseType(typeof(StationInfo), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StationInfo), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<StationInfo>>> GetAllStations()
         {
             var result = await _stationInfo.GetAllStations();
@@ -25,6 +29,9 @@ namespace DOOBY.Controllers
         }
 
         [HttpGet("{stationId}")]
+        [ProducesResponseType(typeof(StationInfo), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StationInfo), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<StationInfo> GetStationInfoById(int stationId)
         {
             var result = await _stationInfo.GetStationInfoById(stationId);
@@ -33,6 +40,9 @@ namespace DOOBY.Controllers
         }
 
         [HttpGet("geolocations/")]
+        [ProducesResponseType(typeof(StationInfo), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StationInfo), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<StationInfo>>> GetAllGeoLocations()
         {
             var result = await _stationInfo.GetAllGeoLocations();
@@ -41,6 +51,10 @@ namespace DOOBY.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
+        [ProducesResponseType(typeof(StationInfo), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StationInfo), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<StationInfo> AddNewStation(StationInfo stationInfo)
         {
             var result = await _stationInfo.AddNewStation(stationInfo);
@@ -49,6 +63,10 @@ namespace DOOBY.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = Roles.Admin)]
+        [ProducesResponseType(typeof(StationInfo), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(StationInfo), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<StationInfo> UpdateStationInfo(StationInfo stationInfo)
         {
             var result = await _stationInfo.UpdateStationInfo(stationInfo);
