@@ -14,7 +14,7 @@ public partial class Admin
 
     public string[]? Permissions { get; set; }
 
-    public virtual User UserInfo { get; set; } = null!;
+    public virtual User AdminNavigation { get; set; } = null!;
 
     [JsonIgnore]
     public virtual ICollection<StationInfo> StationInfos { get; set; } = new List<StationInfo>();

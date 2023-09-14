@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DOOBY.Models;
 
-namespace DOOBY.Models
+namespace DOOBY.DTOs
 {
-    public class GeolocationInfo
+    public class GeolocationInfoDTO
     {
         [Required]
         public string? Latitude { get; set; }
@@ -11,7 +12,8 @@ namespace DOOBY.Models
         public string? Longitude { get; set; }
 
 
-        public GeolocationInfo(StationInfo statioInfo) {
+        public GeolocationInfoDTO(StationInfo statioInfo)
+        {
             Latitude = statioInfo.Latitude;
             Longitude = statioInfo.Longitude;
         }

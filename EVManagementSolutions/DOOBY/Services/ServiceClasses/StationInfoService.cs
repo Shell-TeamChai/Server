@@ -1,4 +1,5 @@
-﻿using DOOBY.GloablExceptions;
+﻿using DOOBY.DTOs;
+using DOOBY.GloablExceptions;
 using DOOBY.Models;
 using DOOBY.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -87,9 +88,9 @@ namespace DOOBY.Services.ServiceClasses
             }
         }
 
-        public async Task<List<GeolocationInfo>> GetAllGeoLocations()
+        public async Task<List<GeolocationInfoDTO>> GetAllGeoLocations()
         {
-            List<GeolocationInfo> geolocationInfos = new List<GeolocationInfo>();
+            List<GeolocationInfoDTO> geolocationInfos = new List<GeolocationInfoDTO>();
 
             var result = await _context.StationInfos.ToListAsync();
 
@@ -100,7 +101,7 @@ namespace DOOBY.Services.ServiceClasses
 
             foreach ( var info in result)
             {
-                geolocationInfos.Add(new GeolocationInfo(info));
+                geolocationInfos.Add(new GeolocationInfoDTO(info));
             }
             return geolocationInfos;
         }

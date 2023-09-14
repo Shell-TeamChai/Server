@@ -14,7 +14,7 @@ public partial class Customer
 
     public string PhoneNum { get; set; } = null!;
 
-    public virtual User UserInfo { get; set; } = null!;
+    public virtual User Cust { get; set; } = null!;
 
     [JsonIgnore]
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();

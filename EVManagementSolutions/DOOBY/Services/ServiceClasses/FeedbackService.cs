@@ -20,7 +20,7 @@ namespace DOOBY.Services.ServiceClasses
         {
             var result = _context.Feedbacks.ToListAsync();
 
-            if(result == null)
+            if (result == null)
             {
                 throw new Exception(ExceptionDetails.exceptionMessages[0]);
             }
@@ -43,10 +43,11 @@ namespace DOOBY.Services.ServiceClasses
         {
             var res = await _context.Customers.Where(item => item.CustId == response.UserId).ToListAsync();
 
-            if(res == null)
+            if (res == null)
             {
                 throw new Exception(ExceptionDetails.exceptionMessages[1]);
             }
+            //Feedback feedback = new Feedback();
             Feedback feedback = new Feedback(response, res[0]);
             //feedback.FeedbackId = response.FeedbackId;
             //feedback.UserId = response.UserId;

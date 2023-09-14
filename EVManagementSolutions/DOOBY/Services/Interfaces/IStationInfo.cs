@@ -1,4 +1,5 @@
-﻿using DOOBY.Models;
+﻿using DOOBY.DTOs;
+using DOOBY.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DOOBY.Services.Interfaces
@@ -7,7 +8,7 @@ namespace DOOBY.Services.Interfaces
     {
         public Task<List<StationInfo>> GetAllStations();
 
-        public Task<List<GeolocationInfo>> GetAllGeoLocations();
+        public Task<List<GeolocationInfoDTO>> GetAllGeoLocations();
 
         public Task<StationInfo> GetStationInfoById(int stationId);
 

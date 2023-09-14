@@ -12,5 +12,9 @@
 
         public int? StationId { get; set; }
 
+        public DateOnly? CreatedAt { get; set; }
+
+        public DateOnly? LastEdit { get; set; }
+
     }
 }

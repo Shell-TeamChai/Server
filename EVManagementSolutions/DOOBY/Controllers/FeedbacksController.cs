@@ -29,7 +29,7 @@ namespace DOOBY.Controllers
         public async Task<List<Feedback>> GetAllFeedbacksFromCustomer(int cust_id)
         {
             var result = await _feedback.GetAllFeedbacksFromCustomer(cust_id);
-            
+
             return result;
         }
 
@@ -40,14 +40,6 @@ namespace DOOBY.Controllers
 
             return result;
         }
-
-
-            //[HttpGet("{cust_id}")]
-            //public async Task<ActionResult<List<Feedback>>> GetAllFeedbacksFromCustomer(int user_id)
-            //{
-            //    var result = await _feedback.GetAllFeedbacksFromCustomer(user_id);
-
-            //    return result;
-            //}
-        }
+     
+    }
 }
