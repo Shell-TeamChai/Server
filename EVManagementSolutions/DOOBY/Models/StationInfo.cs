@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DOOBY.Models;
 
@@ -20,5 +22,5 @@ public partial class StationInfo
     public virtual Admin? StationMasterNavigation { get; set; }
 
     [JsonIgnore]
-    public virtual StationSelectInfo? StationSelectInfo { get; set; }
+    public virtual ICollection<StationSelectInfo> StationSelectInfos { get; set; } = new List<StationSelectInfo>();
 }

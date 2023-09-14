@@ -1,5 +1,7 @@
-﻿using System.Text.Json.Serialization;
-using DOOBY.DTOs;
+﻿using DOOBY.DTOs;
+using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DOOBY.Models;
 
@@ -7,7 +9,7 @@ public partial class Feedback
 {
     public int FeedbackId { get; set; }
 
-    public int UserId { get; set; }
+    public int? UserId { get; set; }
 
     public int? Rating { get; set; }
 
@@ -15,17 +17,24 @@ public partial class Feedback
 
     public int? StationId { get; set; }
 
+    public DateOnly? CreatedAt { get; set; }
+
+    public DateOnly? LastEdit { get; set; }
+
     [JsonIgnore]
-    public virtual Customer User { get; set; } = null!;
+    public virtual Customer? User { get; set; }
 
     public Feedback() { }
 
-    public Feedback(CustomerFeedbackDTO customerFeedbackDTO, Customer customer) {
+    public Feedback(CustomerFeedbackDTO customerFeedbackDTO, Customer customer)
+    {
         FeedbackId = customerFeedbackDTO.FeedbackId;
         UserId = customerFeedbackDTO.UserId;
-        Rating = customerFeedbackDTO.Rating;  
+        Rating = customerFeedbackDTO.Rating;
         Description = customerFeedbackDTO.Description;
         StationId = customerFeedbackDTO.StationId;
-        User = customer;
+        CreatedAt = customerFeedbackDTO.CreatedAt;
+        LastEdit = customerFeedbackDTO.LastEdit;    
+        this.User = customer;
     }
 }

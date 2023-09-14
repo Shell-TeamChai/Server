@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DOOBY.Services.ServiceClasses
 {
-    public class CustomerService : ICustomer 
+    public class CustomerService : ICustomer
     {
         private CaseStudyContext _context;
 
@@ -18,7 +18,7 @@ namespace DOOBY.Services.ServiceClasses
         {
             var findUserById = await _context.Users.Where(item => item.UserId == custId).ToListAsync();
 
-            if(findUserById == null)
+            if (findUserById == null)
             {
                 throw new NullReferenceException(ExceptionDetails.exceptionMessages[0]);
             }
@@ -40,7 +40,7 @@ namespace DOOBY.Services.ServiceClasses
         {
             var _customer = await _context.Customers.FirstOrDefaultAsync(item => item.CustId == customer.CustId);
 
-            if(_customer == null)
+            if (_customer == null)
             {
                 throw new Exception(ExceptionDetails.exceptionMessages[0]);
             }

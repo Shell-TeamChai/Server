@@ -28,12 +28,11 @@ public partial class CaseStudyContext : DbContext
     public virtual DbSet<StationSelectInfo> StationSelectInfos { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-    public object StationInfo { get; internal set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseNpgsql("Host=localhost; database=Case_Study; username=postgres; password=password");
 
-    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Admin>(entity =>
@@ -55,7 +54,7 @@ public partial class CaseStudyContext : DbContext
                 .HasColumnType("character varying[]")
                 .HasColumnName("permissions");
 
-            entity.HasOne(d => d.UserInfo).WithOne(p => p.Admin)
+            entity.HasOne(d => d.AdminNavigation).WithOne(p => p.Admin)
                 .HasForeignKey<Admin>(d => d.AdminId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Admins_admin_id");
@@ -81,7 +80,7 @@ public partial class CaseStudyContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("phone_num");
 
-            entity.HasOne(d => d.UserInfo).WithOne(p => p.Customer)
+            entity.HasOne(d => d.Cust).WithOne(p => p.Customer)
                 .HasForeignKey<Customer>(d => d.CustId)
                 .HasConstraintName("FK_Customer_cust_id");
         });
@@ -92,17 +91,15 @@ public partial class CaseStudyContext : DbContext
 
             entity.ToTable("feedback");
 
-            entity.Property(e => e.FeedbackId)
-                .ValueGeneratedNever()
-                .HasColumnName("feedback_id");
+            entity.Property(e => e.FeedbackId).HasColumnName("feedback_id");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
             entity.Property(e => e.Description)
                 .HasMaxLength(256)
                 .HasColumnName("description");
+            entity.Property(e => e.LastEdit).HasColumnName("last_edit");
             entity.Property(e => e.Rating).HasColumnName("rating");
             entity.Property(e => e.StationId).HasColumnName("station_id");
-            entity.Property(e => e.UserId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("user_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
 
             entity.HasOne(d => d.User).WithMany(p => p.Feedbacks)
                 .HasForeignKey(d => d.UserId)
@@ -116,24 +113,22 @@ public partial class CaseStudyContext : DbContext
 
             entity.ToTable("grievance");
 
-            entity.Property(e => e.GrievanceId)
-                .ValueGeneratedNever()
-                .HasColumnName("grievance_id");
+            entity.Property(e => e.GrievanceId).HasColumnName("grievance_id");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
             entity.Property(e => e.Description)
                 .HasMaxLength(256)
                 .HasColumnName("description");
+            entity.Property(e => e.LastEdit).HasColumnName("last_edit");
             entity.Property(e => e.StationId).HasColumnName("station_id");
             entity.Property(e => e.Status)
                 .HasMaxLength(24)
-                .HasColumnName("type");
-            entity.Property(e => e.UserId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("user_id");
+                .HasColumnName("status");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
 
             entity.HasOne(d => d.User).WithMany(p => p.Grievances)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("FK_Feedback_customers.user_id");
+                .HasConstraintName("FK_Grievance_customers.user_id");
         });
 
         modelBuilder.Entity<StationInfo>(entity =>
@@ -163,26 +158,24 @@ public partial class CaseStudyContext : DbContext
 
         modelBuilder.Entity<StationSelectInfo>(entity =>
         {
-            entity.HasKey(e => e.StationId).HasName("station_select_info_pkey");
+            entity.HasKey(e => new { e.StationId, e.ProductId }).HasName("station_select_info_pkey");
 
             entity.ToTable("station_select_info");
 
-            entity.Property(e => e.StationId)
-                .ValueGeneratedNever()
-                .HasColumnName("station_id");
+            entity.Property(e => e.StationId).HasColumnName("station_id");
+            entity.Property(e => e.ProductId)
+                .HasMaxLength(24)
+                .HasColumnName("product_id");
             entity.Property(e => e.Count)
                 .HasDefaultValueSql("0")
                 .HasColumnName("count");
             entity.Property(e => e.Price).HasColumnName("price");
-            entity.Property(e => e.ProductId)
-                .HasMaxLength(24)
-                .HasColumnName("product_id");
             entity.Property(e => e.ProductName)
                 .HasMaxLength(24)
                 .HasColumnName("product_name");
 
-            entity.HasOne(d => d.Station).WithOne(p => p.StationSelectInfo)
-                .HasForeignKey<StationSelectInfo>(d => d.StationId)
+            entity.HasOne(d => d.Station).WithMany(p => p.StationSelectInfos)
+                .HasForeignKey(d => d.StationId)
                 .HasConstraintName("FK_Station_Select_info.station_id");
         });
 
@@ -191,6 +184,8 @@ public partial class CaseStudyContext : DbContext
             entity.HasKey(e => e.UserId).HasName("users_pkey");
 
             entity.ToTable("users");
+
+            entity.HasIndex(e => e.Email, "users_email_key").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("user_id");
             entity.Property(e => e.Email)

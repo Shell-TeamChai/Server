@@ -13,7 +13,11 @@ public partial class Grievance
 
     public string? Description { get; set; }
 
-    public int StationId { get; set; }
+    public int? StationId { get; set; }
+
+    public DateOnly? CreatedAt { get; set; }
+
+    public DateOnly? LastEdit { get; set; }
 
     public virtual Customer User { get; set; } = null!;
 }
