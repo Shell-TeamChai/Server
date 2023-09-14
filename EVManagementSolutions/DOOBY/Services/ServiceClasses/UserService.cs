@@ -38,7 +38,7 @@ namespace DOOBY.Services.ServiceClasses
         {
             var _user = await _context.Users.FirstOrDefaultAsync(item => item.UserId == user.UserId);
             
-            if(user != null)
+            if(_user != null)
             {
                 throw new Exception(ExceptionDetails.exceptionMessages[1]);
             }
