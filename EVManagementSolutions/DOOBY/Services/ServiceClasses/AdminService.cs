@@ -20,7 +20,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (findUserById == null)
             {
-                throw new NullReferenceException(ExceptionDetails.exceptionMessages[3]);
+                throw new NullReferenceException(ExceptionDetails.exceptionMessages[0]);
             }
 
             var result = await _context.Admins.FirstOrDefaultAsync(item => item.AdminId == id);

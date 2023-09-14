@@ -22,7 +22,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (result == null)
             {
-                throw new Exception(ExceptionDetails.exceptionMessages[0]);
+                throw new Exception(ExceptionDetails.exceptionMessages[7]);
             }
             return result;
         }
@@ -33,7 +33,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (res == null)
             {
-                throw new Exception("No feedbacks from given customer");
+                throw new Exception(ExceptionDetails.exceptionMessages[8]);
             }
 
             return res;
@@ -45,7 +45,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (res == null)
             {
-                throw new Exception(ExceptionDetails.exceptionMessages[1]);
+                throw new Exception(ExceptionDetails.exceptionMessages[0]);
             }
             //Feedback feedback = new Feedback();
             Feedback feedback = new Feedback(response, res[0]);
@@ -62,7 +62,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (result == null)
             {
-                throw new Exception(ExceptionDetails.exceptionMessages[0]);
+                throw new Exception(ExceptionDetails.exceptionMessages[9]);
             }
             return result;
         }

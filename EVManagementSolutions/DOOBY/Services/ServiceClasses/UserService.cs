@@ -40,7 +40,7 @@ namespace DOOBY.Services.ServiceClasses
             
             if(_user != null)
             {
-                throw new Exception(ExceptionDetails.exceptionMessages[1]);
+                throw new Exception(ExceptionDetails.exceptionMessages[16]);
             }
 
             await _context.Users.AddAsync(user);
@@ -71,7 +71,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (newUser == null)
             {
-                throw new Exception(ExceptionDetails.exceptionMessages[0]);
+                throw new Exception(ExceptionDetails.exceptionMessages[17]);
             }
             return newUser;
         }
@@ -89,7 +89,7 @@ namespace DOOBY.Services.ServiceClasses
             }
             else
             {
-                throw new Exception(ExceptionDetails.exceptionMessages[1]);
+                throw new Exception(ExceptionDetails.exceptionMessages[0]);
             }
         }
 

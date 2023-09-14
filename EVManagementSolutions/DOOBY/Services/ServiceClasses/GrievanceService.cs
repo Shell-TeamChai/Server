@@ -21,7 +21,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (result == null)
             {
-                throw new Exception(ExceptionDetails.exceptionMessages[0]);
+                throw new Exception(ExceptionDetails.exceptionMessages[10]);
             }
             return result;
         }
@@ -32,7 +32,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (res == null)
             {
-                throw new Exception("No feedbacks from given customer");
+                throw new Exception(ExceptionDetails.exceptionMessages[11]);
             }
 
             return res;
@@ -44,7 +44,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (res == null)
             {
-                throw new Exception(ExceptionDetails.exceptionMessages[1]);
+                throw new Exception(ExceptionDetails.exceptionMessages[0]);
             }
             Grievance grievance = new Grievance(response, res[0]);
             
@@ -54,7 +54,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (result == null)
             {
-                throw new Exception(ExceptionDetails.exceptionMessages[0]);
+                throw new Exception(ExceptionDetails.exceptionMessages[12]);
             }
             return result;
         }

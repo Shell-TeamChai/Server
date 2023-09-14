@@ -22,7 +22,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (result == null)
             {
-                throw new Exception(ExceptionDetails.exceptionMessages[0]);
+                throw new Exception(ExceptionDetails.exceptionMessages[13]);
             }
             return result;
         }
@@ -33,7 +33,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (_station == null)
             {
-                throw new NullReferenceException(ExceptionDetails.exceptionMessages[0]);
+                throw new NullReferenceException(ExceptionDetails.exceptionMessages[1]);
             }
 
             return _station;
@@ -46,7 +46,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (result == null)
             {
-                throw new Exception(ExceptionDetails.exceptionMessages[0]);
+                throw new Exception(ExceptionDetails.exceptionMessages[14]);
             }
             return result;
         }
@@ -57,7 +57,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (_station == null)
             {
-                throw new ArgumentException(ExceptionDetails.exceptionMessages[0]);
+                throw new ArgumentException(ExceptionDetails.exceptionMessages[13]);
             }
             else
             {
@@ -79,7 +79,7 @@ namespace DOOBY.Services.ServiceClasses
             var _station = await _context.StationInfos.FindAsync(stationId);
             if (_station == null)
             {
-                throw new ArgumentException(ExceptionDetails.exceptionMessages[0]);
+                throw new ArgumentException(ExceptionDetails.exceptionMessages[13]);
             }
             else
             {
@@ -96,7 +96,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (result == null)
             {
-                throw new Exception(ExceptionDetails.exceptionMessages[0]);
+                throw new Exception(ExceptionDetails.exceptionMessages[15]);
             }
 
             foreach ( var info in result)

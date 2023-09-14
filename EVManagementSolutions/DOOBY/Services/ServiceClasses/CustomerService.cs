@@ -55,7 +55,7 @@ namespace DOOBY.Services.ServiceClasses
 
             if (newCustomer == null)
             {
-                throw new Exception(ExceptionDetails.exceptionMessages[0]);
+                throw new Exception(ExceptionDetails.exceptionMessages[2]);
             }
             return newCustomer[0];
         }
