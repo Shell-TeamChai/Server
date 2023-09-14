@@ -28,7 +28,7 @@ namespace DOOBY.Services.ServiceClasses
             // var audience = jwtSettings["Audience"];
             //double min = Convert.ToDouble("ExpiresIn");
             //var expires = DateTime.UtcNow.AddMinutes(min);
-            var expirationTime = DateTime.UtcNow.AddMinutes(10);
+            var expirationTime = DateTime.UtcNow.AddMinutes(50);
             // Convert.ToDouble(_configuration["JwtSettings:ExpiresIn"]));
 
             var claims = new[]
