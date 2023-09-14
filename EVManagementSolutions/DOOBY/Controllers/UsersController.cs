@@ -19,6 +19,8 @@ namespace DOOBY.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
+        [ProducesResponseType(typeof(AuthenticateResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AuthenticateResponse>> Authenticate(AuthenticateRequest model)
         {
             if (model != null)
@@ -34,6 +36,8 @@ namespace DOOBY.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<User>> AddUser(User user)
         {
             try
