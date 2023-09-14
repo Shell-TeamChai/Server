@@ -57,6 +57,7 @@ builder.Services.AddScoped<IToken, TokenService>();
 builder.Services.AddScoped<IAdmin, AdminService>();
 builder.Services.AddScoped<ICustomer, CustomerService>();
 builder.Services.AddScoped<IFeedback, FeedbackService>();
+builder.Services.AddScoped<IGrievance, GrievanceService>();
 builder.Services.AddScoped<IStationInfo, StationInfoService>();
 
 builder.Services.AddCors(options =>

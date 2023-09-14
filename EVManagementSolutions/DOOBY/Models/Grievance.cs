@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DOOBY.DTOs;
+using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DOOBY.Models;
 
@@ -19,5 +21,20 @@ public partial class Grievance
 
     public DateOnly? LastEdit { get; set; }
 
+    [JsonIgnore]
     public virtual Customer User { get; set; } = null!;
+
+    public Grievance() { }
+
+    public Grievance(CustomerGrievanceDTO customerGrievanceDTO, Customer customer)
+    {
+        GrievanceId = customerGrievanceDTO.GrievanceId;
+        UserId = customerGrievanceDTO.UserId;
+        Status = customerGrievanceDTO.Status;
+        Description = customerGrievanceDTO.Description;
+        StationId = customerGrievanceDTO.StationId;
+        CreatedAt = customerGrievanceDTO.CreatedAt;
+        LastEdit = customerGrievanceDTO.LastEdit;
+        this.User = customer;
+    }
 }
