@@ -1,0 +1,172 @@
+-- Create the Customer Table
+Create TABLE Customer(
+	cust_id INT PRIMARY KEY,
+	fname varchar(24) NOT NULL,
+	lname varchar(24) NOT NULL,
+	phone_num char(10) NOT NULL,
+	CONSTRAINT "FK_Customer_cust_id"
+    FOREIGN KEY ("cust_id")
+    REFERENCES Users("user_id")
+	ON DELETE CASCADE
+
+);
+
+drop table Customer;
+
+-- Insert values into customer table
+INSERT INTO Customer(cust_id, fname, lname, phone_num)
+VALUES
+	(1001, 'John', 'Doe', 1234567890),
+	(1002, 'Priya', 'Aggarwal', 9876543210),
+	(1003, 'Sarthak', 'Sangal', 5555555555),
+	(1004, 'Naman', 'Jain', 3333333333),
+	(1005, 'Michael', 'Brown', 6666666666);
+	
+-- Create Table 
+CREATE TABLE Admins(
+	admin_id INT PRIMARY KEY,
+	fname varchar(24) NOT NULL,
+	lname varchar(24) NOT NULL,
+	permissions varchar[],
+	CONSTRAINT "FK_Admins_admin_id"
+    FOREIGN KEY ("admin_id")
+    REFERENCES Users("user_id")
+	ON DELETE SET NULL
+);
+
+-- INsert values into admins table
+INSERT INTO Admins(admin_id, fname, lname)
+VALUES
+	(2001, 'Aditya N', 'Singh'),
+	(2002, 'Prabal', 'Gautam'),
+	(2003, 'Sophia', 'Wilson');
+
+select * from Admins;
+
+-- Create the User table
+CREATE TABLE Users (
+    User_id Serial PRIMARY KEY,
+    Type_of_user VARCHAR(20) NOT NULL,
+    Email VARCHAR(50) NOT NULL UNIQUE ,
+    Pass_word VARCHAR(24) NOT NULL
+);
+
+-- drop table users;
+
+INSERT INTO Users (User_id, Type_of_user, Email, Pass_word)
+VALUES
+    (1001, 'Customer', 'john.doe@gmail.com', 'customer_password1'),
+    (1002, 'Customer', 'aggarwalpriya1121@gmail.com', 'customer_password2'),
+    (1003, 'Customer', 'stk,sangal@gmail.com', 'customer_password3'),
+    (1004, 'Customer', 'random248500@gmail.com', 'customer_password4'),
+    (1005, 'Customer', 'michael.brown@gmail.com', 'customer_password5'),
+    (2001, 'Admin', 'aditya.narayan2001@gmail.com', 'admin_password1'),
+    (2002, 'Admin', 'gautamprabal01@gmail.com', 'admin_password2'),
+    (2003, 'Admin', 'sophia.wilson@gmail.com', 'admin_password3');
+	
+select * from users;
+
+-- Create the Feedback table
+CREATE TABLE Feedback (
+    User_id serial,
+    Feedback_id INT NOT NULL,
+    Rating INT CHECK (Rating >= 1 AND Rating <= 5),
+    Description VARCHAR(256),
+    Station_ID int,
+    Created_at DATE,
+   last_edit DATE,
+
+	CONSTRAINT "FK_Feedback_customers.user_id"
+ 	FOREIGN KEY ("user_id")
+ 	REFERENCES Customer("cust_id")
+ 	ON DELETE SET NULL
+);
+
+-- Insert feedback data for users
+INSERT INTO Feedback (User_id, Feedback_id, Rating, Description, Station_id)
+VALUES
+    (1001, 100001, 5, 'The EV charging station was excellent. Fast charging and great service.', 110007),
+    (1002, 100002, 4, 'I had a good experience with the station, but the Select_shop has room for improvement', 110011),
+    (1003, 100003, 3, 'The charging station was average. It could be better.', 110001),
+    (1004, 100004, 2, 'The station services need improvement as well as cleaniness.', 110005),
+    (1005, 100005, 1, 'My experience with the EV charging station was terrible. It didn''t work at all.', 110008);
+--    (2001, 100006, 5, 'The EV charging station for administrators was top-notch. Fast and reliable.', 110010),
+--    (2002, 100007, 4, 'Great Experience. The app is quite accurate.', 110002),
+--    (2003, 100008, 3, 'Services could improve in terms of quality as well as quality.', 110006);
+
+--Drop Table feedback;
+
+select * from feedback;
+
+-- Create the Grievance table with a foreign key to User
+CREATE TABLE Grievance (
+    User_id Serial NOT NULL,
+    Grievance_id INT PRIMARY KEY,
+    Description VARCHAR(256),
+    Status VARCHAR(24),
+    Station_id INT UNIQUE NOT NULL,
+   Created_at DATE,
+   last_edit DATE,
+    CONSTRAINT "FK_Feedback_customers.user_id"
+   FOREIGN KEY ("user_id") 
+   REFERENCES Customer("cust_id")
+   ON DELETE SET NULL
+);
+
+INSERT INTO Grievance (User_id, Grievance_id, Description, Status, Station_id)
+VALUES
+    (1001, 200001, 'I faced an issue with the charging station. It was not working.', 'Open', 110010),
+    (1002, 200002, 'The charging station was occupied, and I had to wait for a long time.', 'Open', 110007),
+    (1003, 200003, 'The charging station charged me incorrectly, and I want a refund.', 'Open', 110002);
+	
+select * from Grievance;	
+
+CREATE TABLE Station_info(
+	Station_id INT PRIMARY KEY,
+	Longitude varchar(24),
+	Latitude varchar(24),
+	Total_Nodes INT,
+	Available_Nodes INT,
+	Station_Master INT,
+	CONSTRAINT "FK_Station_info_admins.station_id"
+ 	FOREIGN KEY ("station_master")
+ 	REFERENCES Admins("admin_id")
+ 	ON DELETE SET NULL);
+	
+select * from admins;
+
+INSERT INTO station_info(Station_id, Longitude, Latitude, Total_Nodes, Available_Nodes, Station_Master)
+VALUES
+	(110001, '77.6899897091891', '13.2130349755811', 4, 1, 2002),
+	(110002, '77.5900696030629', '12.8643910678025', 3, 0, 2001),
+	(110003, '77.671380094614', '12.9233825083959', 5, 5, 2001),
+	(110004, '77.7082660520947', '12.9835486962288', 4, 3, 2003),
+	(110005, '77.6655519084593', '12.9128592825738', 2, 1, 2002),
+	(110006, '77.6443254188656', '12.9095657788359', 3, 2, 2003),
+	(110007, '77.579620239538', '12.9122297664314', 1, 0, 2003),
+	(110008, '77.7160620742867', '12.966174560294', 5, 5, 2002),
+	(110009, '77.4720655352726', '12.9175780571322', 2, 0, 2003),
+	(110010, '77.7227814129408', '12.8979727640252', 5, 3, 2001),
+	(110011, '77.7024638569779', '13.1674400530072', 3, 2, 2001),
+	(110012, '77.6895542007721', '13.0014070992526', 1, 0, 2002);
+	
+select * FROM Station_info;
+CREATE TABLE Station_Select_info (
+  "station_id" int,
+  "product_id" varchar(24) NOT NULL,
+  "product_name" varchar(24) NOT NULL,
+  "price" int NOT NULL,
+  "count" int DEFAULT 0,
+  PRIMARY KEY(station_id, product_id),
+  FOREIGN KEY ("station_id")
+  REFERENCES Station_info("station_id")
+  ON DELETE CASCADE
+);
+INSERT INTO Station_Select_info ("station_id", "product_id", "product_name", "price", "count")
+VALUES
+    (110001, 'prod001', ‘Coca Cola’, 45, 100),
+    (110001, 'prod002', 'Red Bull Energy Drink', 115, 20),
+    (110002, 'prod001', ‘Cadbury Dairy Milk Silk’, 175, 80),
+    (110002, 'prod003', ' Deli2go Cappuccino', 95, 20),
+    (110003, 'prod002', ' Deli2go Cappuccino', 95, 60),
+    (110003, 'prod004', ' Cadbury Dairy Milk Silk ', 175, 30);
