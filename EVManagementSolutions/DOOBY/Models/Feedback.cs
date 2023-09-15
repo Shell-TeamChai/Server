@@ -21,20 +21,20 @@ public partial class Feedback
 
     public DateOnly? LastEdit { get; set; }
 
-    [JsonIgnore]
+    //[JsonIgnore]
     public virtual Customer? User { get; set; }
 
     public Feedback() { }
 
-    public Feedback(CustomerFeedbackDTO customerFeedbackDTO, Customer customer)
+    public Feedback(int feedbackId, CustomerFeedbackDTO customerFeedbackDTO, Customer customer)
     {
-        FeedbackId = customerFeedbackDTO.FeedbackId;
+        FeedbackId = feedbackId;
         UserId = customerFeedbackDTO.UserId;
         Rating = customerFeedbackDTO.Rating;
         Description = customerFeedbackDTO.Description;
         StationId = customerFeedbackDTO.StationId;
         CreatedAt = customerFeedbackDTO.CreatedAt;
-        LastEdit = customerFeedbackDTO.LastEdit;    
-        this.User = customer;
+        LastEdit = customerFeedbackDTO.LastEdit;
+        //this.User = customer;
     }
 }

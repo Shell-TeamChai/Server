@@ -19,7 +19,6 @@ namespace DOOBY.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin, Customer")]
         [ProducesResponseType(typeof(Feedback), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Feedback), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -30,8 +29,8 @@ namespace DOOBY.Controllers
             return result;
         }
 
+        //[Authorize(Roles = "Admin,Customer")]
         [HttpGet("{cust_id}")]
-        [Authorize(Roles = "Admin, Customer")]
 
         [ProducesResponseType(typeof(Feedback), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Feedback), StatusCodes.Status400BadRequest)]
@@ -44,7 +43,7 @@ namespace DOOBY.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.Customer)]
+        //[Authorize(Roles = Roles.Customer)]
         [ProducesResponseType(typeof(Feedback), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Feedback), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

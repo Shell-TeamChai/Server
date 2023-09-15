@@ -28,7 +28,7 @@ namespace DOOBY.Services.ServiceClasses
 
         public async Task<List<Grievance>> GetAllGrievancesFromCustomer(int cust_id)
         {
-            var res = await _context.Grievances.Where(item => item.UserId == cust_id).ToListAsync();
+            var res = await _context.Grievances.Include(item => item.User).Where(item => item.UserId == cust_id).ToListAsync();
 
             if (res == null)
             {

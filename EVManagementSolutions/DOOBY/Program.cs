@@ -25,7 +25,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         In = ParameterLocation.Header,
         Description = "Please enter JWT with Bearer into field",
-        Name = "Authorization",
+        Name = "Authentication",
         Type = SecuritySchemeType.ApiKey
     });
 

@@ -18,7 +18,7 @@ namespace DOOBY.Services.ServiceClasses
 
         public Task<List<Feedback>> GetAllFeedbacks()
         {
-            var result = _context.Feedbacks.ToListAsync();
+            var result = _context.Feedbacks.Include(item => item.User).ToListAsync();
 
             if (result == null)
             {
@@ -29,7 +29,7 @@ namespace DOOBY.Services.ServiceClasses
 
         public async Task<List<Feedback>> GetAllFeedbacksFromCustomer(int cust_id)
         {
-            var res = await _context.Feedbacks.Where(item => item.UserId == cust_id).ToListAsync();
+            var res = await _context.Feedbacks.Include(item => item.User).Where(item => item.UserId == cust_id).ToListAsync();
 
             if (res == null)
             {
@@ -47,15 +47,12 @@ namespace DOOBY.Services.ServiceClasses
             {
                 throw new Exception(ExceptionDetails.exceptionMessages[0]);
             }
-            //Feedback feedback = new Feedback();
-            Feedback feedback = new Feedback(response, res[0]);
-            //feedback.FeedbackId = response.FeedbackId;
-            //feedback.UserId = response.UserId;
-            //feedback.Rating = response.Rating;
-            //feedback.Description = response.Description;
-            //feedback.StationId = response.StationId;
-            //feedback.User = res[0];
 
+            var id = _context.Feedbacks.Max(item => item.FeedbackId) + 1;
+            response.CreatedAt = DateOnly.FromDateTime(DateTime.Now);
+
+            Feedback feedback = new Feedback(id, response, res[0]);
+            
             await _context.Feedbacks.AddAsync(feedback);
             await _context.SaveChangesAsync();
             var result = await _context.Feedbacks.FindAsync(feedback.FeedbackId);

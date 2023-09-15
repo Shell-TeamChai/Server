@@ -2,8 +2,6 @@
 {
     public class CustomerFeedbackDTO
     {
-        public int FeedbackId { get; set; }
-
         public int UserId { get; set; }
 
         public int? Rating { get; set; }
