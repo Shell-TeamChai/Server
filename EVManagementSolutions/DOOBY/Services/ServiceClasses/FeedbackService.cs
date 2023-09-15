@@ -47,8 +47,15 @@ namespace DOOBY.Services.ServiceClasses
             {
                 throw new Exception(ExceptionDetails.exceptionMessages[0]);
             }
+            int id;
+            try
+            {
+                id = _context.Feedbacks.Max(item => item.FeedbackId) + 1;
 
-            var id = _context.Feedbacks.Max(item => item.FeedbackId) + 1;
+            }catch(Exception ex)
+            {
+                id = 1;
+            }
             response.CreatedAt = DateOnly.FromDateTime(DateTime.Now);
 
             Feedback feedback = new Feedback(id, response, res[0]);
@@ -63,5 +70,23 @@ namespace DOOBY.Services.ServiceClasses
             }
             return result;
         }
+
+        public async Task<List<Feedback>> DeleteFeedback(int feedbackId)
+        {
+            var _feedback = await _context.Feedbacks.FindAsync(feedbackId);
+            if (_feedback == null)
+            {
+                throw new ArgumentException(ExceptionDetails.exceptionMessages[0]);
+            }
+            else
+            {
+                _context.Feedbacks.Remove(_feedback);
+                await _context.SaveChangesAsync();
+
+                var feedbacks = await _context.Feedbacks.ToListAsync();
+                return feedbacks;
+            }
+        }
+
     }
 }

@@ -15,5 +15,7 @@ public partial class StationSelectInfo
 
     public int? Count { get; set; }
 
+    public string? ProductImage { get; set; }
+
     public virtual StationInfo Station { get; set; } = null!;
 }

@@ -21,20 +21,20 @@ public partial class Grievance
 
     public DateOnly? LastEdit { get; set; }
 
-    [JsonIgnore]
+    //[JsonIgnore]
     public virtual Customer User { get; set; } = null!;
 
     public Grievance() { }
 
-    public Grievance(CustomerGrievanceDTO customerGrievanceDTO, Customer customer)
+    public Grievance(int grievanceId, CustomerGrievanceDTO customerGrievanceDTO, Customer customer)
     {
-        GrievanceId = customerGrievanceDTO.GrievanceId;
+        GrievanceId = grievanceId;
         UserId = customerGrievanceDTO.UserId;
         Status = customerGrievanceDTO.Status;
         Description = customerGrievanceDTO.Description;
         StationId = customerGrievanceDTO.StationId;
         CreatedAt = customerGrievanceDTO.CreatedAt;
         LastEdit = customerGrievanceDTO.LastEdit;
-        this.User = customer;
+        //this.User = customer;
     }
 }

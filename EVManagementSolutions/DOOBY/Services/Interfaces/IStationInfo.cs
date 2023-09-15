@@ -1,6 +1,5 @@
 ﻿using DOOBY.DTOs;
 using DOOBY.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace DOOBY.Services.Interfaces
 {
@@ -17,5 +16,7 @@ namespace DOOBY.Services.Interfaces
         public Task<StationInfo> UpdateStationInfo(StationInfo stationInfo);
 
         public void RemoveStation(int stationId);
+
+        //public Task<List<StationInfoDTO>> FindStationsNearMe(GeolocationInfoDTO userGeolocationI);
     }
 }

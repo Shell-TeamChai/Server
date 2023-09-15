@@ -53,6 +53,14 @@ namespace DOOBY.Controllers
 
             return result;
         }
-     
+
+        //[HttpDelete]
+        //[ProducesResponseType(typeof(Feedback), StatusCodes.Status200OK)]
+        //[ProducesResponseType(typeof(Feedback), StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //public async Task<List<Feedback>> DeleteFeedback(int feedbackId)
+        //{
+
+        //}
     }
 }

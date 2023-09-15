@@ -17,7 +17,7 @@ namespace DOOBY.Controllers
         }
 
         [HttpGet("{adminId}")]
-        [Authorize(Roles = Roles.Admin)]
+        //[Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(typeof(Admin), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Admin>> GetAdminDetailById(int adminId)

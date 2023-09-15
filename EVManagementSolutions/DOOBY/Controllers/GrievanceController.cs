@@ -10,18 +10,18 @@ namespace DOOBY.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class GrievanceController : ControllerBase
+    public class GrievancesController : ControllerBase
     {
 
         IGrievance _grievance;
 
-        public GrievanceController(IGrievance grievance)
+        public GrievancesController(IGrievance grievance)
         {
             _grievance = grievance;
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin, Customer")]
+        //[Authorize(Roles = "Admin, Customer")]
         [ProducesResponseType(typeof(Grievance), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Grievance), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -33,7 +33,7 @@ namespace DOOBY.Controllers
         }
 
         [HttpGet("{cust_id}")]
-        [Authorize(Roles = "Admin, Customer")]
+        //[Authorize(Roles = "Admin, Customer")]
         [ProducesResponseType(typeof(Grievance), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Grievance), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -45,7 +45,7 @@ namespace DOOBY.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.Customer)]
+        //[Authorize(Roles = Roles.Customer)]
         [ProducesResponseType(typeof(Grievance), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Grievance), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -55,6 +55,20 @@ namespace DOOBY.Controllers
 
             return result;
         }
+
+
+        [HttpPut]
+        //[Authorize(Roles = Roles.Admin)]
+        [ProducesResponseType(typeof(Grievance), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Grievance), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<Grievance> UpdateGrievance(CustomerGrievanceDTO grievance)
+        {
+            var result = await _grievance.UpdateGrievance(grievance);
+
+            return result;
+        }
+
     }
 }
 

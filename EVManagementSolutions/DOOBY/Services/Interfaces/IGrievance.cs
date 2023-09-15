@@ -10,5 +10,8 @@ namespace DOOBY.Services.Interfaces
         public Task<List<Grievance>> GetAllGrievancesFromCustomer(int cust_id);
 
         public Task<Grievance> PostGrievance(CustomerGrievanceDTO response);
+
+        public Task<Grievance> UpdateGrievance(CustomerGrievanceDTO response);
+
     }
 }

@@ -51,7 +51,7 @@ namespace DOOBY.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.Admin)]
+        //[Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(typeof(StationInfo), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(StationInfo), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -63,7 +63,7 @@ namespace DOOBY.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = Roles.Admin)]
+        //[Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(typeof(StationInfo), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(StationInfo), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

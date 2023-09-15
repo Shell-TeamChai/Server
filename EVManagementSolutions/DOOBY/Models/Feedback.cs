@@ -1,7 +1,6 @@
 ﻿using DOOBY.DTOs;
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace DOOBY.Models;
 

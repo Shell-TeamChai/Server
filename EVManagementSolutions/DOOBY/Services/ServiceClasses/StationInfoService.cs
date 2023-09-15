@@ -105,5 +105,24 @@ namespace DOOBY.Services.ServiceClasses
             }
             return geolocationInfos;
         }
+
+
+        public async Task<List<StationInfoDTO>> FindStationsNearMe(GeolocationInfoDTO userGeolocation)
+        {
+            var result = await _context.StationInfos.ToListAsync();
+            List<StationInfoDTO> stationInfoDTOs = new List<StationInfoDTO>();
+
+            double userLatitude = Convert.ToDouble(userGeolocation.Latitude);
+            double userLongitude = Convert.ToDouble(userGeolocation.Longitude);
+
+            foreach (var station in result)
+            {
+                stationInfoDTOs.Add(new StationInfoDTO(station, userGeolocation));
+            }
+
+            stationInfoDTOs = stationInfoDTOs.OrderBy(x => x.Distance).ToList();
+
+            return stationInfoDTOs;
+        }
     }
 }

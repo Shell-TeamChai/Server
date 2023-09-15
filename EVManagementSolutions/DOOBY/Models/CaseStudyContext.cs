@@ -31,7 +31,7 @@ public partial class CaseStudyContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost; database=Case_Study; username=postgres; password=password;");
+        => optionsBuilder.UseNpgsql("Host=localhost; database=Case_Study; username=postgres; password=password");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -105,7 +105,6 @@ public partial class CaseStudyContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Feedbacks)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Feedback_customers.user_id");
         });
 
@@ -151,7 +150,11 @@ public partial class CaseStudyContext : DbContext
             entity.Property(e => e.Longitude)
                 .HasMaxLength(24)
                 .HasColumnName("longitude");
+            entity.Property(e => e.StationAddress).HasColumnName("station_address");
             entity.Property(e => e.StationMaster).HasColumnName("station_master");
+            entity.Property(e => e.StationName)
+                .HasMaxLength(240)
+                .HasColumnName("station_name");
             entity.Property(e => e.TotalNodes).HasColumnName("total_nodes");
 
             entity.HasOne(d => d.StationMasterNavigation).WithMany(p => p.StationInfos)
@@ -174,6 +177,7 @@ public partial class CaseStudyContext : DbContext
                 .HasDefaultValueSql("0")
                 .HasColumnName("count");
             entity.Property(e => e.Price).HasColumnName("price");
+            entity.Property(e => e.ProductImage).HasColumnName("“product_image”");
             entity.Property(e => e.ProductName)
                 .HasMaxLength(24)
                 .HasColumnName("product_name");

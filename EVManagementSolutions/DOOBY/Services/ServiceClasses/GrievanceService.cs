@@ -46,7 +46,15 @@ namespace DOOBY.Services.ServiceClasses
             {
                 throw new Exception(ExceptionDetails.exceptionMessages[0]);
             }
-            Grievance grievance = new Grievance(response, res[0]);
+            int id;
+            try{
+                id = _context.Grievances.Max(item => item.GrievanceId) + 1;
+
+            }catch(Exception ex)
+            {
+                id = 1;
+            }
+            Grievance grievance = new Grievance(id, response, res[0]);
             
             await _context.Grievances.AddAsync(grievance);
             await _context.SaveChangesAsync();
@@ -57,6 +65,26 @@ namespace DOOBY.Services.ServiceClasses
                 throw new Exception(ExceptionDetails.exceptionMessages[12]);
             }
             return result;
+        }
+
+        public async Task<Grievance> UpdateGrievance(CustomerGrievanceDTO grievance)
+        {
+            var _grievance = await _context.Grievances.FindAsync(grievance.GrievanceId);
+
+            if (_grievance == null)
+            {
+                throw new ArgumentException(ExceptionDetails.exceptionMessages[11]);
+            }
+            else
+            {
+                _grievance.Status = grievance.Status;
+
+                await _context.SaveChangesAsync();
+
+                _grievance = await _context.Grievances.FindAsync(grievance.GrievanceId);
+                return _grievance;
+            }
+
         }
     }
 }
